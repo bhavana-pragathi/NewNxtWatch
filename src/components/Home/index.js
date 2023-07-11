@@ -1,20 +1,16 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-import {AiOutlineSearch, AiFillHome, AiFillFire} from 'react-icons/ai'
-import {SiYoutubegaming} from 'react-icons/si'
-import {BiListPlus} from 'react-icons/bi'
+import {AiOutlineSearch} from 'react-icons/ai'
 import Header from '../Header'
 import HomeItem from '../HomeItem'
+import SideCommonDiv from '../SideCommonDiv'
 import {
   SearchInput,
   SecondDiv,
   MainDiv,
   SearchDiv,
   SearchButton,
-  FirstDiv,
-  FirstDivName,
-  NameLogoDiv,
   BottomDiv,
   LoaderDiv,
   NoSearchResultsDiv,
@@ -154,24 +150,7 @@ class Home extends Component {
       <MainDiv>
         <Header />
         <BottomDiv>
-          <FirstDiv>
-            <NameLogoDiv>
-              <AiFillHome />
-              <FirstDivName>Home</FirstDivName>
-            </NameLogoDiv>
-            <NameLogoDiv>
-              <AiFillFire />
-              <FirstDivName>Trending</FirstDivName>
-            </NameLogoDiv>
-            <NameLogoDiv>
-              <SiYoutubegaming />
-              <FirstDivName>Gaming</FirstDivName>
-            </NameLogoDiv>
-            <NameLogoDiv>
-              <BiListPlus />
-              <FirstDivName>Saved Videos</FirstDivName>
-            </NameLogoDiv>
-          </FirstDiv>
+          <SideCommonDiv />
           <SecondDiv>
             <SearchDiv>
               <SearchInput

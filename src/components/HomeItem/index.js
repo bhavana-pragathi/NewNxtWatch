@@ -23,9 +23,12 @@ const HomeItem = props => {
     viewCount,
     publishedAt,
   } = homeDetails
+
+  const onClickThumbnail = () => {}
+
   return (
     <Li>
-      <Thumbnail src={thumbnailUrl} alt={name} />
+      <Thumbnail onClick={onClickThumbnail} src={thumbnailUrl} alt={name} />
       <BottomDiv>
         <ProfileDiv>
           <ProfileImg src={profileImageUrl} alt={name} />

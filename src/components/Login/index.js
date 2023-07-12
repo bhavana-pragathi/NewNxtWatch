@@ -75,6 +75,7 @@ class Login extends Component {
           type="checkbox"
           value={isChecked}
           onChange={this.onChangeCheckbox}
+          id="label-checkbox"
         />
         <Label htmlFor="label-checkbox">Show Password</Label>
       </LabelInputCheckbox>
@@ -123,7 +124,7 @@ class Login extends Component {
         <CardDiv onSubmit={this.onSubmitForm}>
           <WebLogo
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-            alt="website-logo"
+            alt="website logo"
           />
           {this.renderUsername()}
           {this.renderPassword()}

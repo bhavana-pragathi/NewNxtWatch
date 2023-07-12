@@ -1,3 +1,5 @@
+import {formatDistanceToNow} from 'date-fns'
+import {BsDot} from 'react-icons/bs'
 import {
   Li,
   Thumbnail,
@@ -8,25 +10,38 @@ import {
   ViewsCount,
   PublishedAt,
   Dot,
+  LinkItem,
 } from './styledComponents'
 
 const TrendingItem = props => {
   const {trendingDetails} = props
-  const {title, thumbnailUrl, name, viewCount, publishedAt} = trendingDetails
+  const {
+    id,
+    title,
+    thumbnailUrl,
+    name,
+    viewCount,
+    publishedAt,
+  } = trendingDetails
+  const newDate = formatDistanceToNow(new Date(publishedAt), {addSuffix: true})
 
   return (
-    <Li>
-      <Thumbnail src={thumbnailUrl} alt={name} />
-      <ContentDiv>
-        <Title>{title}</Title>
-        <Name>{name}</Name>
-        <ViewsDiv>
-          <ViewsCount>{viewCount}</ViewsCount>
-          <Dot>.</Dot>
-          <PublishedAt>{publishedAt}</PublishedAt>
-        </ViewsDiv>
-      </ContentDiv>
-    </Li>
+    <LinkItem to={`/videos/${id}`}>
+      <Li>
+        <Thumbnail src={thumbnailUrl} alt="video thumbnail" />
+        <ContentDiv>
+          <Title>{title}</Title>
+          <Name>{name}</Name>
+          <ViewsDiv>
+            <ViewsCount>{viewCount}</ViewsCount>
+            <Dot>
+              <BsDot />
+            </Dot>
+            <PublishedAt>{newDate}</PublishedAt>
+          </ViewsDiv>
+        </ContentDiv>
+      </Li>
+    </LinkItem>
   )
 }
 

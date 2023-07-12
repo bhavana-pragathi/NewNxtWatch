@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Li = styled.li`
@@ -46,4 +47,7 @@ export const Dot = styled.p`
   font-size: 15px;
   margin-right: 10px;
   align-self: center;
+`
+export const LinkItem = styled(Link)`
+  text-decoration: none;
 `

@@ -29,3 +29,7 @@ export const LogoutButton = styled.button`
   border-color: #3b82f6;
   background-color: transparent;
 `
+export const ThemeButton = styled.button`
+  border: none;
+  background-color: transparent;
+`

@@ -66,6 +66,10 @@ class TrendingVideos extends Component {
     }
   }
 
+  onRetry = () => {
+    this.getTrendingData()
+  }
+
   renderSuccessView = () => {
     const {trendingData} = this.state
     return (
@@ -83,7 +87,7 @@ class TrendingVideos extends Component {
     <NoSearchResultsDiv>
       <NoSearchResultsImg
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt="failure image"
+        alt="failure view"
       />
       <NoSearchResultsHeading>
         Oops! Something Went Wrong

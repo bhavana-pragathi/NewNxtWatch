@@ -63,6 +63,10 @@ class Gaming extends Component {
     }
   }
 
+  onRetry = () => {
+    this.getGamingData()
+  }
+
   renderSuccessView = () => {
     const {gamingData} = this.state
     return (
@@ -80,7 +84,7 @@ class Gaming extends Component {
     <NoSearchResultsDiv>
       <NoSearchResultsImg
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt="failure image"
+        alt="failure view"
       />
       <NoSearchResultsHeading>
         Oops! Something Went Wrong

@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Li = styled.li`
@@ -5,6 +6,7 @@ export const Li = styled.li`
   flex-direction: column;
   width: 25%;
   margin-bottom: 10px;
+  margin-right: 20px;
 `
 export const Thumbnail = styled.img`
   height: 150px;
@@ -49,5 +51,7 @@ export const Dot = styled.p`
   color: #000000;
   font-size: 15px;
   margin-right: 10px;
-  align-self: center;
+`
+export const LinkItem = styled(Link)`
+  text-decoration: none;
 `

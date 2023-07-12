@@ -1,4 +1,4 @@
-import {withRouter} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import {FaMoon} from 'react-icons/fa'
 import {
@@ -7,6 +7,7 @@ import {
   HeaderItems,
   HeaderProfile,
   LogoutButton,
+  ThemeButton,
 } from './styledComponents'
 
 const Header = props => {
@@ -18,12 +19,16 @@ const Header = props => {
 
   return (
     <HeaderNav>
-      <HeaderLogo
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-        alt="website logo"
-      />
+      <Link to="/">
+        <HeaderLogo
+          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+          alt="website logo"
+        />
+      </Link>
       <HeaderItems>
-        <FaMoon style={{height: 25}} />
+        <ThemeButton type="button" data-testid="theme">
+          <FaMoon style={{height: 25}} />
+        </ThemeButton>
         <HeaderProfile
           src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
           alt="profile"

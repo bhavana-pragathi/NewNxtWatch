@@ -1,3 +1,5 @@
+import {formatDistanceToNow} from 'date-fns'
+import {BsDot} from 'react-icons/bs'
 import {
   Li,
   Thumbnail,
@@ -11,11 +13,13 @@ import {
   ViewsCount,
   PublishedAt,
   Dot,
+  LinkItem,
 } from './styledComponents'
 
 const HomeItem = props => {
   const {homeDetails} = props
   const {
+    id,
     title,
     thumbnailUrl,
     name,
@@ -24,26 +28,30 @@ const HomeItem = props => {
     publishedAt,
   } = homeDetails
 
-  const onClickThumbnail = () => {}
+  const newDate = formatDistanceToNow(new Date(publishedAt), {addSuffix: true})
 
   return (
-    <Li>
-      <Thumbnail onClick={onClickThumbnail} src={thumbnailUrl} alt={name} />
-      <BottomDiv>
-        <ProfileDiv>
-          <ProfileImg src={profileImageUrl} alt={name} />
-        </ProfileDiv>
-        <ContentDiv>
-          <Title>{title}</Title>
-          <Name>{name}</Name>
-          <ViewsDiv>
-            <ViewsCount>{viewCount}</ViewsCount>
-            <Dot>.</Dot>
-            <PublishedAt>{publishedAt}</PublishedAt>
-          </ViewsDiv>
-        </ContentDiv>
-      </BottomDiv>
-    </Li>
+    <LinkItem to={`/videos/${id}`}>
+      <Li>
+        <Thumbnail src={thumbnailUrl} alt={name} />
+        <BottomDiv>
+          <ProfileDiv>
+            <ProfileImg src={profileImageUrl} alt={name} />
+          </ProfileDiv>
+          <ContentDiv>
+            <Title>{title}</Title>
+            <Name>{name}</Name>
+            <ViewsDiv>
+              <ViewsCount>{viewCount}</ViewsCount>
+              <Dot>
+                <BsDot />
+              </Dot>
+              <PublishedAt>{newDate}</PublishedAt>
+            </ViewsDiv>
+          </ContentDiv>
+        </BottomDiv>
+      </Li>
+    </LinkItem>
   )
 }
 

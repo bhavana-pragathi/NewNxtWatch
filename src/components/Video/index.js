@@ -1,45 +1,42 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-import {AiOutlineSearch} from 'react-icons/ai'
 import Header from '../Header'
-import HomeItem from '../HomeItem'
 import SideCommonDiv from '../SideCommonDiv'
+import VideoItem from '../VideoItem'
 import {
-  SearchInput,
-  SecondDiv,
   MainDiv,
-  SearchDiv,
-  SearchButton,
   BottomDiv,
+  RightSideDiv,
   LoaderDiv,
   NoSearchResultsDiv,
-  NoSearchResultsImg,
   NoSearchResultsHeading,
+  NoSearchResultsImg,
   NoSearchResultsPara,
   RetryButton,
-  Ul,
 } from './styledComponents'
 
 const apiConstants = {
   initial: 'INITIAL',
+  success: 'SUCCESS',
   inProgress: 'IN_PROGRESS',
   failure: 'FAILURE',
-  success: 'SUCCESS',
 }
 
-class Home extends Component {
-  state = {apiStatus: apiConstants.initial, homeData: [], searchInput: ''}
+class Video extends Component {
+  state = {videoData: [], apiStatus: apiConstants.initial}
 
   componentDidMount() {
-    this.getHomeItems()
+    this.getVideoData()
   }
 
-  getHomeItems = async () => {
-    const {searchInput} = this.state
+  getVideoData = async () => {
     this.setState({apiStatus: apiConstants.inProgress})
+    const {match} = this.props
+    const {params} = match
+    const {id} = params
     const jwtToken = Cookies.get('jwt_token')
-    const apiUrl = `https://apis.ccbp.in/videos/all?search=${searchInput}`
+    const apiUrl = `https://apis.ccbp.in/videos/${id}`
     const options = {
       method: 'GET',
       headers: {
@@ -49,54 +46,45 @@ class Home extends Component {
     const response = await fetch(apiUrl, options)
     if (response.ok) {
       const fetchedData = await response.json()
-      const updatedData = fetchedData.videos.map(eachItem => ({
+      const updatedData = fetchedData.video_details.map(eachItem => ({
         id: eachItem.id,
         title: eachItem.title,
+        videoUrl: eachItem.video_url,
         thumbnailUrl: eachItem.thumbnail_url,
         name: eachItem.channel.name,
         profileImageUrl: eachItem.channel.profile_image_url,
+        subscriberCount: eachItem.channel.subscriber_count,
         viewCount: eachItem.view_count,
         publishedAt: eachItem.published_at,
+        description: eachItem.description,
       }))
-      this.setState({homeData: updatedData, apiStatus: apiConstants.success})
+      this.setState({
+        videoData: updatedData,
+        apiStatus: apiConstants.success,
+      })
     } else {
       this.setState({apiStatus: apiConstants.failure})
     }
   }
 
   onRetry = () => {
-    this.getHomeItems()
+    this.getVideoData()
   }
 
-  renderInProgressView = () => (
+  renderSuccessView = () => {
+    const {videoData} = this.state
+    return (
+      <>
+        <VideoItem videoDetails={videoData} />
+      </>
+    )
+  }
+
+  renderLoadingView = () => (
     <LoaderDiv data-testid="loader">
       <Loader type="ThreeDots" color="#0b69ff" height="50" width="50" />
     </LoaderDiv>
   )
-
-  renderSuccessView = () => {
-    const {homeData} = this.state
-    const noSearchResults = homeData.length === 0
-    return noSearchResults ? (
-      <NoSearchResultsDiv>
-        <NoSearchResultsImg
-          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
-          alt="no videos"
-        />
-        <NoSearchResultsHeading>No Search Results Found</NoSearchResultsHeading>
-        <NoSearchResultsPara>
-          Try different key words or remove search filter
-        </NoSearchResultsPara>
-        <RetryButton>Retry</RetryButton>
-      </NoSearchResultsDiv>
-    ) : (
-      <Ul>
-        {homeData.map(eachItem => (
-          <HomeItem key={eachItem.id} homeDetails={eachItem} />
-        ))}
-      </Ul>
-    )
-  }
 
   renderFailureView = () => (
     <NoSearchResultsDiv>
@@ -116,11 +104,11 @@ class Home extends Component {
     </NoSearchResultsDiv>
   )
 
-  renderHomePage = () => {
+  renderVideoPage = () => {
     const {apiStatus} = this.state
     switch (apiStatus) {
       case apiConstants.inProgress:
-        return this.renderInProgressView()
+        return this.renderLoadingView()
       case apiConstants.success:
         return this.renderSuccessView()
       case apiConstants.failure:
@@ -130,46 +118,17 @@ class Home extends Component {
     }
   }
 
-  onChangeSearchInput = event => {
-    this.setState({searchInput: event.target.value})
-  }
-
-  onClickSearch = () => {
-    this.getHomeItems()
-  }
-
-  onEnterSearch = event => {
-    if (event.key === 'Enter') {
-      this.getHomeItems()
-    }
-  }
-
   render() {
-    const {searchInput} = this.state
     return (
       <MainDiv>
         <Header />
         <BottomDiv>
           <SideCommonDiv />
-          <SecondDiv>
-            <SearchDiv>
-              <SearchInput
-                type="search"
-                placeholder="Search"
-                onChange={this.onChangeSearchInput}
-                value={searchInput}
-                onKeyDown={this.onEnterSearch}
-              />
-              <SearchButton type="button" onClick={this.onClickSearch}>
-                <AiOutlineSearch />
-              </SearchButton>
-            </SearchDiv>
-            {this.renderHomePage()}
-          </SecondDiv>
+          <RightSideDiv>{this.renderVideoPage()}</RightSideDiv>
         </BottomDiv>
       </MainDiv>
     )
   }
 }
 
-export default Home
+export default Video

@@ -5,6 +5,7 @@ import {SiYoutubegaming} from 'react-icons/si'
 import Header from '../Header'
 import SideCommonDiv from '../SideCommonDiv'
 import GamingItem from '../GamingItem'
+import ThemeContext from '../../context/ThemeContext'
 import {
   MainDiv,
   Ul,
@@ -73,7 +74,7 @@ class Gaming extends Component {
       <>
         <Ul>
           {gamingData.map(eachItem => (
-            <GamingItem key={eachItem.id} gamingDetails={eachItem} />
+            <GamingItem key={eachItem.id} videoDetails={eachItem} />
           ))}
         </Ul>
       </>
@@ -120,21 +121,30 @@ class Gaming extends Component {
 
   render() {
     return (
-      <MainDiv>
-        <Header />
-        <BottomDiv>
-          <SideCommonDiv />
-          <RightSideDiv>
-            <TrendHeadingDiv>
-              <LogoDiv>
-                <SiYoutubegaming style={{color: 'Red'}} />
-              </LogoDiv>
-              <TrendHeading>Gaming</TrendHeading>
-            </TrendHeadingDiv>
-            {this.renderGamingPage()}
-          </RightSideDiv>
-        </BottomDiv>
-      </MainDiv>
+      <ThemeContext.Consumer>
+        {value => {
+          const {isDark} = value
+          const bgColor = isDark ? '#0f0f0f' : '#f9f9f9'
+          const color = isDark ? '#ebebeb' : '#0f0f0f'
+          return (
+            <MainDiv>
+              <Header />
+              <BottomDiv>
+                <SideCommonDiv />
+                <RightSideDiv data-testid="gaming" bgColor={bgColor}>
+                  <TrendHeadingDiv>
+                    <LogoDiv>
+                      <SiYoutubegaming size={35} color="#ff0000" />
+                    </LogoDiv>
+                    <TrendHeading color={color}>Gaming</TrendHeading>
+                  </TrendHeadingDiv>
+                  {this.renderGamingPage()}
+                </RightSideDiv>
+              </BottomDiv>
+            </MainDiv>
+          )
+        }}
+      </ThemeContext.Consumer>
     )
   }
 }

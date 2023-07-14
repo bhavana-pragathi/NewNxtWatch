@@ -6,9 +6,13 @@ export const BottomDiv = styled.ul`
 export const MainDiv = styled.div``
 export const RightSideDiv = styled.div`
   width: 85%;
+  background-color: ${props => props.bgColor};
+  color: ${props => props.color};
 `
 export const LoaderDiv = styled.div`
   display: flex;
+  justify-content: center;
+  margin-top: 250px;
 `
 export const NoSearchResultsDiv = styled.div`
   display: flex;

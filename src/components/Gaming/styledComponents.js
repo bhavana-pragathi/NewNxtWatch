@@ -35,15 +35,18 @@ export const RetryButton = styled.button`
 `
 export const LoaderDiv = styled.div`
   display: flex;
-  text-align: center;
+  justify-content: center;
+  margin-top: 180px;
 `
 export const RightSideDiv = styled.div`
   width: 85%;
+  background-color: ${props => props.bgColor};
 `
 export const TrendHeadingDiv = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  color: ${props => props.color};
 `
 export const LogoDiv = styled.div`
   height: 50px;

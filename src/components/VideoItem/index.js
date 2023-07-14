@@ -1,77 +1,59 @@
-import {formatDistanceToNow} from 'date-fns'
-import {BiListPlus} from 'react-icons/bi'
-import {AiOutlineLike, AiOutlineDislike} from 'react-icons/ai'
+import ThemeContext from '../../context/ThemeContext'
 import {
-  VideoTitle,
-  ViewsCount,
-  ViewsDiv,
-  PublishedAt,
-  Dot,
-  ViewsLikeDiv,
-  LikeShareButton,
-  LikeShareDiv,
-  Hr,
-  ContentDiv,
-  VideoProfileLogo,
-  NameSubscribersDiv,
-  Name,
-  Subs,
-  Desc,
-  Thumbnail,
+  ItemLink,
+  TrendingListItem,
+  TrendingThumbNailImage,
+  TrendingVideoDetails,
+  TrendingProfileImage,
+  TrendingContentSection,
+  TrendingTitle,
+  TrendingChannelName,
+  TrendingViewsAndDate,
+  TrendingDot,
 } from './styledComponents'
 
 const VideoItem = props => {
-  const {videoDetails, onClickSave} = props
+  const {videoDetails} = props
   const {
     id,
     title,
     thumbnailUrl,
-    name,
-    profileImageUrl,
-    subscriberCount,
     viewCount,
     publishedAt,
-    description,
+    name,
+    profileImageUrl,
   } = videoDetails
-
-  const newDate = formatDistanceToNow(new Date(publishedAt), {addSuffix: true})
-
-  const onClickSaveButton = () => {
-    onClickSave(id)
-  }
-
   return (
-    <>
-      <Thumbnail src={thumbnailUrl} alt={name} />
-      <VideoTitle>{title}</VideoTitle>
-      <ViewsLikeDiv>
-        <ViewsDiv>
-          <ViewsCount>{viewCount}</ViewsCount>
-          <Dot>.</Dot>
-          <PublishedAt>{newDate}</PublishedAt>
-        </ViewsDiv>
-        <LikeShareDiv>
-          <LikeShareButton>
-            <AiOutlineLike />
-          </LikeShareButton>
-          <LikeShareButton>
-            <AiOutlineDislike />
-          </LikeShareButton>
-          <LikeShareButton onClick={onClickSaveButton}>
-            <BiListPlus />
-          </LikeShareButton>
-        </LikeShareDiv>
-      </ViewsLikeDiv>
-      <Hr />
-      <ContentDiv>
-        <VideoProfileLogo src={profileImageUrl} alt={name} />
-        <NameSubscribersDiv>
-          <Name>{name}</Name>
-          <Subs>{subscriberCount}</Subs>
-        </NameSubscribersDiv>
-      </ContentDiv>
-      <Desc>{description}</Desc>
-    </>
+    <ThemeContext.Consumer>
+      {value => {
+        const {isDark} = value
+        const color = isDark ? '#f9f9f9' : '#231f20'
+        return (
+          <ItemLink to={`/videos/${id}`} className="link">
+            <TrendingListItem>
+              <TrendingThumbNailImage
+                src={thumbnailUrl}
+                alt="video thumbnail"
+              />
+              <TrendingVideoDetails>
+                <TrendingProfileImage
+                  src={profileImageUrl}
+                  alt="channel logo"
+                />
+                <TrendingContentSection>
+                  <TrendingTitle color={color}>{title}</TrendingTitle>
+                  <TrendingChannelName>{name}</TrendingChannelName>
+                  <TrendingViewsAndDate>
+                    {viewCount} views<TrendingDot> &#8226; </TrendingDot>
+                    {publishedAt}
+                  </TrendingViewsAndDate>
+                </TrendingContentSection>
+              </TrendingVideoDetails>
+            </TrendingListItem>
+          </ItemLink>
+        )
+      }}
+    </ThemeContext.Consumer>
   )
 }
 

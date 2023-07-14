@@ -7,19 +7,20 @@ import SideCommonDiv from '../SideCommonDiv'
 import TrendingItem from '../TrendingItem'
 import {
   MainDiv,
-  Ul,
   BottomDiv,
+  SecondDiv,
   NoSearchResultsDiv,
   NoSearchResultsImg,
   NoSearchResultsHeading,
   NoSearchResultsPara,
   RetryButton,
   LoaderDiv,
-  RightSideDiv,
   TrendHeadingDiv,
   LogoDiv,
   TrendHeading,
+  Ul,
 } from './styledComponents'
+import ThemeContext from '../../context/ThemeContext'
 
 const apiConstants = {
   initial: 'INITIAL',
@@ -76,7 +77,7 @@ class TrendingVideos extends Component {
       <>
         <Ul>
           {trendingData.map(eachItem => (
-            <TrendingItem key={eachItem.id} trendingDetails={eachItem} />
+            <TrendingItem key={eachItem.id} videoDetails={eachItem} />
           ))}
         </Ul>
       </>
@@ -123,21 +124,34 @@ class TrendingVideos extends Component {
 
   render() {
     return (
-      <MainDiv>
-        <Header />
-        <BottomDiv>
-          <SideCommonDiv />
-          <RightSideDiv>
-            <TrendHeadingDiv>
-              <LogoDiv>
-                <AiFillFire style={{color: 'Red'}} />
-              </LogoDiv>
-              <TrendHeading>Trending</TrendHeading>
-            </TrendHeadingDiv>
-            {this.renderTrendingPage()}
-          </RightSideDiv>
-        </BottomDiv>
-      </MainDiv>
+      <ThemeContext.Consumer>
+        {value => {
+          const {isDark} = value
+          const bgColor = isDark ? '#0f0f0f' : '#f9f9f9'
+          const color = isDark ? '#ebebeb' : '#0f0f0f'
+          return (
+            <MainDiv>
+              <Header />
+              <BottomDiv>
+                <SideCommonDiv />
+                <SecondDiv
+                  data-testid="trending"
+                  bgColor={bgColor}
+                  color={color}
+                >
+                  <TrendHeadingDiv>
+                    <LogoDiv>
+                      <AiFillFire size={35} color="#ff0000" />
+                    </LogoDiv>
+                    <TrendHeading>Trending</TrendHeading>
+                  </TrendHeadingDiv>
+                  {this.renderTrendingPage()}
+                </SecondDiv>
+              </BottomDiv>
+            </MainDiv>
+          )
+        }}
+      </ThemeContext.Consumer>
     )
   }
 }

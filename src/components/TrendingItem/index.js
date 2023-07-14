@@ -14,15 +14,8 @@ import {
 } from './styledComponents'
 
 const TrendingItem = props => {
-  const {trendingDetails} = props
-  const {
-    id,
-    title,
-    thumbnailUrl,
-    name,
-    viewCount,
-    publishedAt,
-  } = trendingDetails
+  const {videoDetails} = props
+  const {id, title, thumbnailUrl, name, viewCount, publishedAt} = videoDetails
   const newDate = formatDistanceToNow(new Date(publishedAt), {addSuffix: true})
 
   return (

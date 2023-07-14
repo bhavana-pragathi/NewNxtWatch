@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import SideCommonDiv from '../SideCommonDiv'
-import VideoItem from '../VideoItem'
+import VideoPlayerView from '../VideoPlayerView'
 import {
   MainDiv,
   BottomDiv,
@@ -15,6 +15,7 @@ import {
   NoSearchResultsPara,
   RetryButton,
 } from './styledComponents'
+import ThemeContext from '../../context/ThemeContext'
 
 const apiConstants = {
   initial: 'INITIAL',
@@ -73,11 +74,7 @@ class Video extends Component {
 
   renderSuccessView = () => {
     const {videoData} = this.state
-    return (
-      <>
-        <VideoItem videoDetails={videoData} />
-      </>
-    )
+    return <VideoPlayerView videoDetails={videoData} />
   }
 
   renderLoadingView = () => (
@@ -96,9 +93,7 @@ class Video extends Component {
         Oops! Something Went Wrong
       </NoSearchResultsHeading>
       <NoSearchResultsPara>
-        We are having some trouble to complete your request.
-        <br />
-        Please try again.
+        We are having some trouble to complete your request. Please try again.
       </NoSearchResultsPara>
       <RetryButton onClick={this.onRetry}>Retry</RetryButton>
     </NoSearchResultsDiv>
@@ -120,13 +115,24 @@ class Video extends Component {
 
   render() {
     return (
-      <MainDiv>
-        <Header />
-        <BottomDiv>
-          <SideCommonDiv />
-          <RightSideDiv>{this.renderVideoPage()}</RightSideDiv>
-        </BottomDiv>
-      </MainDiv>
+      <ThemeContext.Consumer>
+        {value => {
+          const {isDark} = value
+          const bgColor = isDark ? '#0f0f0f' : '#f9f9f9'
+          const color = isDark ? '#ebebeb' : '#0f0f0f'
+          return (
+            <MainDiv>
+              <Header />
+              <BottomDiv>
+                <SideCommonDiv />
+                <RightSideDiv bgColor={bgColor} color={color}>
+                  {this.renderVideoPage()}
+                </RightSideDiv>
+              </BottomDiv>
+            </MainDiv>
+          )
+        }}
+      </ThemeContext.Consumer>
     )
   }
 }

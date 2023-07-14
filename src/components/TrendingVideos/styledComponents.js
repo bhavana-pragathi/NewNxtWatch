@@ -1,10 +1,19 @@
 import styled from 'styled-components'
 
+export const MainDiv = styled.div``
+
 export const Ul = styled.ul`
   list-style-type: none;
 `
 export const BottomDiv = styled.ul`
   display: flex;
+`
+export const SecondDiv = styled.div`
+  background-color: #f1f1f1;
+  padding: 20px;
+  width: 85%;
+  background-color: ${props => props.bgColor};
+  color: ${props => props.color};
 `
 export const NoSearchResultsDiv = styled.div`
   display: flex;
@@ -33,10 +42,8 @@ export const RetryButton = styled.button`
 `
 export const LoaderDiv = styled.div`
   display: flex;
-  text-align: center;
-`
-export const RightSideDiv = styled.div`
-  width: 85%;
+  justify-content: center;
+  margin-top: 180px;
 `
 export const TrendHeadingDiv = styled.div`
   display: flex;
@@ -54,4 +61,3 @@ export const LogoDiv = styled.div`
   justify-content: center;
 `
 export const TrendHeading = styled.h1``
-export const MainDiv = styled.div``

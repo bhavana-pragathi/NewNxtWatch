@@ -4,6 +4,7 @@ export const HeaderNav = styled.nav`
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  background-color: ${props => props.bgColor};
 `
 export const HeaderLogo = styled.img`
   height: 30px;
@@ -33,3 +34,10 @@ export const ThemeButton = styled.button`
   border: none;
   background-color: transparent;
 `
+export const CloseContainer = styled.div``
+export const Desc = styled.p``
+export const Buttons = styled.div`
+  display: flex;
+`
+export const CloseButton = styled.button``
+export const ConfirmButton = styled.button``

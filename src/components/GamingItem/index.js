@@ -1,8 +1,8 @@
 import {Li, Thumbnail, Title, ViewsCount, LinkItem} from './styledComponents'
 
 const GamingItem = props => {
-  const {gamingDetails} = props
-  const {id, title, thumbnailUrl, viewCount} = gamingDetails
+  const {videoDetails} = props
+  const {id, title, thumbnailUrl, viewCount} = videoDetails
   return (
     <LinkItem to={`/videos/${id}`}>
       <Li>

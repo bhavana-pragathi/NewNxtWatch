@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-import {AiOutlineSearch} from 'react-icons/ai'
+import {AiOutlineSearch, AiOutlineClose} from 'react-icons/ai'
 import Header from '../Header'
 import HomeItem from '../HomeItem'
 import SideCommonDiv from '../SideCommonDiv'
@@ -19,7 +19,15 @@ import {
   NoSearchResultsPara,
   RetryButton,
   Ul,
+  BannerButton,
+  BannerCloseButton,
+  BannerContainer,
+  BannerImage,
+  BannerLeftPart,
+  BannerRightPart,
+  BannerText,
 } from './styledComponents'
+import ThemeContext from '../../context/ThemeContext'
 
 const apiConstants = {
   initial: 'INITIAL',
@@ -29,7 +37,12 @@ const apiConstants = {
 }
 
 class Home extends Component {
-  state = {apiStatus: apiConstants.initial, homeData: [], searchInput: ''}
+  state = {
+    apiStatus: apiConstants.initial,
+    homeData: [],
+    searchInput: '',
+    bannerDisplay: 'flex',
+  }
 
   componentDidMount() {
     this.getHomeItems()
@@ -144,30 +157,67 @@ class Home extends Component {
     }
   }
 
+  onCloseBanner = () => {
+    this.setState({bannerDisplay: 'none'})
+  }
+
   render() {
-    const {searchInput} = this.state
+    const {searchInput, bannerDisplay} = this.state
     return (
-      <MainDiv>
-        <Header />
-        <BottomDiv>
-          <SideCommonDiv />
-          <SecondDiv>
-            <SearchDiv>
-              <SearchInput
-                type="search"
-                placeholder="Search"
-                onChange={this.onChangeSearchInput}
-                value={searchInput}
-                onKeyDown={this.onEnterSearch}
-              />
-              <SearchButton type="button" onClick={this.onClickSearch}>
-                <AiOutlineSearch />
-              </SearchButton>
-            </SearchDiv>
-            {this.renderHomePage()}
-          </SecondDiv>
-        </BottomDiv>
-      </MainDiv>
+      <ThemeContext.Consumer>
+        {value => {
+          const {isDark} = value
+          const bgColor = isDark ? '#0f0f0f' : '#f9f9f9'
+          const color = isDark ? '#ebebeb' : '#0f0f0f'
+          const display = bannerDisplay === 'flex' ? 'flex' : 'none'
+
+          return (
+            <MainDiv>
+              <Header />
+              <BottomDiv>
+                <SideCommonDiv />
+                <SecondDiv bgColor={bgColor} color={color}>
+                  <BannerContainer data-testid="banner" display={display}>
+                    <BannerLeftPart>
+                      <BannerImage
+                        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                        alt="nxt watch logo"
+                      />
+                      <BannerText>Buy Nxt Watch Premium</BannerText>
+                      <BannerButton type="button">GET IT NOW</BannerButton>
+                    </BannerLeftPart>
+                    <BannerRightPart>
+                      <BannerCloseButton
+                        data-testid="close"
+                        onClick={this.onCloseBanner}
+                      >
+                        <AiOutlineClose size={25} />
+                      </BannerCloseButton>
+                    </BannerRightPart>
+                  </BannerContainer>
+                  <SearchDiv>
+                    <SearchInput
+                      type="search"
+                      placeholder="Search"
+                      onChange={this.onChangeSearchInput}
+                      value={searchInput}
+                      onKeyDown={this.onEnterSearch}
+                    />
+                    <SearchButton
+                      data-testid="searchButton"
+                      type="button"
+                      onClick={this.onClickSearch}
+                    >
+                      <AiOutlineSearch />
+                    </SearchButton>
+                  </SearchDiv>
+                  {this.renderHomePage()}
+                </SecondDiv>
+              </BottomDiv>
+            </MainDiv>
+          )
+        }}
+      </ThemeContext.Consumer>
     )
   }
 }
